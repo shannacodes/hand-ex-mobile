@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { FlatList } from "react-native";
 import { Avatar, ListItem } from "react-native-elements";
 import { EXERCISES } from "../shared/EXERCISES";
 
-const DirectoryScreen = (props) => {
+const DirectoryScreen = ({ navigation }) => {
+  const [exercises, setExercises] = useState(EXERCISES);
+
   const renderDirectoryItem = ({ item: exercise }) => {
     return (
-      <ListItem>
+      <ListItem
+        onPress={() => navigation.navigate("ExerciseInfo", { exercise })}
+      >
         <Avatar source={exercise.image} rounded />
         <ListItem.Content>
           <ListItem.Title>{exercise.name}</ListItem.Title>
@@ -17,7 +22,7 @@ const DirectoryScreen = (props) => {
 
   return (
     <FlatList
-      data={props.exercises}
+      data={exercises}
       renderItem={renderDirectoryItem}
       keyExtractor={(item) => item.id.toString()}
     />
